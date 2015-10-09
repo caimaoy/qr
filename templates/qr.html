@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>basic example</title>
+</head>
+<body>
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>-->
+
+<!--<script type="text/javascript" src="../jquery.qrcode.min.js"></script>
+<script type="text/javascript" src="../src/jquery.qrcode.js"></script>
+<script type="text/javascript" src="../src/qrcode.js"></script>
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+-->
+
+<script src="{{ url_for('static', filename='jquery.min.js')}}"></script>
+<script src="{{ url_for('static', filename='jquery.qrcode.min.js')}}"></script>
+
+<p>二维码转换器</p>
+转为二维码的文字：
+<input id="to_qr_text" type="text">
+<input id="to_qr_text_bt "type="button" value="转换" onclick="fun_text_to_qr();">
+<div id="qr"></div>
+<script>
+	//jQuery('#qrcode').qrcode("this plugin is great");
+    /*
+	jQuery('#qrcodeTable').qrcode({
+		render	: "table",
+		text	: "http://jetienne.com"
+	});
+
+	jQuery('#qrcodeCanvas').qrcode({
+		text	: "http://jetienne.com"
+	});
+    */
+
+    function fun_text_to_qr(){
+        var div = document.getElementById("qr");
+        while(div.hasChildNodes()){
+            div.removeChild(div.firstChild);
+        }
+        var t = document.getElementById("to_qr_text");
+        jQuery('#qr').qrcode({
+            text	: toUtf8(t.value)
+        });
+        $.post("qr_text_upload",
+            {
+                text: t.value
+            },
+            function(data, status){
+                //alert("Data: " + data + "\nStatus: " + status);
+            });
+    }
+
+    function toUtf8(str) {
+        var out, i, len, c;
+        out = "";
+        len = str.length;
+        for(i = 0; i < len; i++) {
+            c = str.charCodeAt(i);
+            if ((c >= 0x0001) && (c <= 0x007F)) {
+                out += str.charAt(i);
+            } else if (c > 0x07FF) {
+                out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F));
+                out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+            } else {
+                out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F));
+                out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+            }
+        }
+        return out;
+    }
+</script>
+
+</body>
+</html>
