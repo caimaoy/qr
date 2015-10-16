@@ -14,8 +14,13 @@
 
 <script src="{{ url_for('static', filename='jquery.min.js')}}"></script>
 <script src="{{ url_for('static', filename='jquery.qrcode.min.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='qr.css') }}" />
 
+
+<div id='all'>
+<div class="center">
 <p>二维码转换器</p>
+</div>
 转为二维码的文字：
 <input id="to_qr_text" type="text">
 <input id="to_qr_text_bt "type="button" value="转换" onclick="fun_text_to_qr();">
@@ -72,5 +77,6 @@
     }
 </script>
 
+</div>
 </body>
 </html>

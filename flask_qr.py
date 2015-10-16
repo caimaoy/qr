@@ -5,6 +5,7 @@ import os
 import sqlite3
 import time
 from flask import Flask, render_template, request, jsonify, g
+from flask_debugtoolbar import DebugToolbarExtension
 app = Flask(__name__)
 
 app.config.update(dict(
@@ -26,9 +27,7 @@ def input_qr():
 
 @app.route('/qr_text_upload', methods=['POST'])
 def upload_text():
-    data = {}
-    data['text'] = 'ret_' + request.form['text']
-    data['status'] = 0
+    data = {'text': 'ret_' + request.form['text'], 'status': 0}
     t = request.form['text']
     if t:
         insert_text_into_db(t)
@@ -75,6 +74,8 @@ def close_db(error):
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
+
+toolbar = DebugToolbarExtension(app)
 
 if __name__ == '__main__':
     app.run(debug=True)
