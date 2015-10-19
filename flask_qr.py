@@ -4,7 +4,6 @@
 import os
 import sqlite3
 import time
-
 from flask import Flask, render_template, request, jsonify, g
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -80,4 +79,4 @@ def close_db(error):
 toolbar = DebugToolbarExtension(app)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)
