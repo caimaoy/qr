@@ -4,8 +4,10 @@
 import os
 import sqlite3
 import time
+
 from flask import Flask, render_template, request, jsonify, g
 from flask_debugtoolbar import DebugToolbarExtension
+
 app = Flask(__name__)
 
 app.config.update(dict(
